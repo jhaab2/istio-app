@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-flask-canary
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: app
+      version: v2
+
+  template:
+    metadata:
+      labels:
+        component: app
+        version: v2
+    spec:
+      containers:
+        - name: flask-app
+          image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:2.0
+          ports:
+            - containerPort: 8080
